@@ -24,20 +24,1327 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+    <!--Phông chữ-->
+    <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&family=Dancing+Script&family=Edu+VIC+WA+NT+Beginner:wght@500&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">  
+   
     <title>React App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div id="root">
+    </div>
+    <style>
+        
+      #page_main{
+        display:none;
+        width:100%;
+        height:100%;
+      }
+      
+      #register_page{
+        display:none
+      }
+      #login_page{
+        
+      }
+      /*right bar*/
+      .right-bar{
+        background-color: white;
+        position:fixed;
+        height:100%;
+        width:25%;
+        right:0%;
+        top:7%;
+        box-shadow:0px 0px 5px #D3D3D3;
+        z-index:-1;
+      }
+      .user_online{
+        width:100%;
+        margin:2px 0px;
+        height:50px;
+        border-radius:7px;
+        display:flex;
+      }
+      .user_online:hover{
+        background-color: #D3D3D3;
+        cursor:pointer;
+      }
+      .user_online img{
+        height:35px;
+        width:35px;
+        border-radius: 50%;
+        margin:2px 10px;
+      }
+      .user_online p{
+        font-family: 'Dancing Script';
+        font-size: 25px;
+        margin:3px;
+      }
+      .active{
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        background-color: green;
+        position:absolute;
+        margin-left:5px;
+      }
+      .call-options{
+        display:none;
+      }
+      .right-bar-inner:hover .call-options{
+        display:block;
+      }
+      /*left bar*/
+      .left-bar{
+        background-color: white;
+        position:fixed;
+        height:100%;
+        width:25%;
+        left:0%;
+        top:7%;
+        box-shadow:0px 0px 5px #D3D3D3;
+        z-index:-1;
+      }
+      .conversation_mem{
+        width:100%;
+        margin:2px 0px;
+        height:50px;
+        border-radius:7px;
+        display:flex;
+      }
+      .conversation_mem:hover{
+        background-color: #D3D3D3;
+        cursor:pointer;
+      }
+      .conversation_mem img{
+        height:35px;
+        width:35px;
+        border-radius: 50%;
+        margin:2px 10px;
+      }
+      .conversation_mem p{
+        font-family: 'Dancing Script';
+        font-size: 15px;
+        margin:3px;
+      }
+      
+      /*send mes*/
+      .send_message{
+        position:fixed;
+        bottom:0px;
+        width:50%;
+        padding:0% 5%;
+        left:25%;
+        display:flex;
+        background-color: white;
+      }
+      .send_message textarea {
+         width:100%;
+         border-radius:10px;
+         box-shadow:1px 1px 1px black;
+         height:150px;
+      }
+      .send_message .btn_function{
+        width:30%;
+      }
+      .send_message .btn{
+        width:100%;
+        margin: 2% 5%;
+        color:white;
+        font-size: 25px;
+      }
+      
+      /*Show message*/
+      .show_message{
+        left:31%;
+        position:absolute;
+        width:48%;
+        left:25%;
+        top:9%;
+        height:500px;
+        bottom:250px;
+        z-index:-1;
+        display:block;
+      }
+      .message_right{  /*Tin nhắn của mình nhắn màu xanh*/
+        width:30%;
+        border-radius: 10px;
+        background-color:#2532E6;
+        color:white;
+        margin-left:70%;
+        position:relative;
+        word-wrap:break-word;
+        display:block;
+      }
+      .message_right p {
+        padding:5px;
+      }
+      .message_left{ /*Tin nhắn của người khác*/
+        width:30%;
+        border-radius: 10px;
+        background-color:#D3D3D3;
+        color:black;
+        margin-left:1%;
+        position:relative;
+        word-wrap:break-word ;
+        display:block;
+      }
+      .message_left p {
+        padding:5px;
+      }
+      
+      
+      /*Video call page*/
+      .videoContainer{
+        margin:0% 10%;
+        display:flex;
+      }
+      .VideoCallPage{
+         padding-top:100px;
+         display:none;
+      }
+      .VideoCallPage h3{
+        text-align:center;
+      }
+      #notification_before_video_call{
+        text-align:center;
+      }
+      
+      /*call group*/
+      .call_group{
+        display:none;
+      }
+      .call_group h1{
+        text-align:center;
+      }
+      
+      /*call group official*/
+      .popup_choose_mem_group{
+        position:fixed;
+        height:50%;
+        width:50%;
+        left:25%;
+        top:25%;
+        border-radius:10px;
+        box-shadow: 5px 5px 5px black;
+        background-color:#f6f5f5;
+        display:none;
+      }
+      #close-icon-call-group{
+        position:absolute;
+        right:0;
+        padding:10px;
+        font-size:15px;
+        border-radius:100%;
+      }
+      #close-icon-call-group:hover{
+        background-color:white;
+      }
+      /*notification when received call*/
+      .notification_received_call_group{
+        position:fixed;
+        left:30%;
+        top:30%;
+        border-radius:10px;
+        box-shadow: 2px 2px 2px black;
+        width:320px;
+        height:300px;
+        display:none;
+      }
+      .notification_received_call_group button{
+        margin: 10px 110px;
+        width:90px;
+      }
+      .notification_received_call_group h5{
+        text-align: center;
+      }
+            </style>
+       <!--Header-->
+  <nav style="position:fixed;width:100%" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Message</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <button type="button" class="btn btn-primary">
+            <li style="display:flex" class="nav-item">
+                Group
+                <i style="padding:5px"class="fa-solid fa-plus"></i>
+            </li>
+          </button>
+          <button style="margin-left:30px" type="button" class="btn btn-primary">
+            <li style="display:flex;padding:0px;margin-bottom:-13px" class="nav-item">
+                <p id="account_user">Account</p>
+                <i style="padding:5px"class="fa-solid fa-file-invoice"></i>
+            </li>
+          </button>
+          <button style="margin-left:30px" type="button" class="btn btn-primary">
+            <li onclick ="callgroup()" class="nav-item">
+              <i class="fa-solid fa-users-rectangle"></i>
+            </li>
+          </button>
+          <button style="margin-left:30px" type="button" class="btn btn-success">
+            <li onclick ="callgroupOfficial()" class="nav-item">
+              <i class="fa-solid fa-users-rectangle"></i>
+            </li>
+          </button>
+          <button style="margin-left:30px" type="button" class="btn btn-success">
+            <li onclick ="callgroupPeerServer()" class="nav-item">
+              <i class="fa-solid fa-users-rectangle"> PS</i>
+            </li>
+          </button>
+          <button style="margin-left:30px" type="button" class="btn btn-success">
+            <li onclick ="LiveStream()" class="nav-item">
+              <i class="fa-solid fa-users-rectangle"> LiveStream</i>
+            </li>
+          </button>
+          
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <!--main page-->
+  <div  id="page_main">
+    <!-- test api  -->
+    <!-- <button type="button" class="btn btn-primary">Primary</button>
+    <div id="h1"></div> -->
+    <div class="right-bar">
+      <h3 style="text-align:center;margin:25px">User Online</h3>
+    </div>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
+    <div class="left-bar">
+      <h3 style="text-align:center;margin:25px">Conversation</h3>
+      <div class="conversation_mem">
+          <img src="https://image.vtc.vn/resize/th/upload/2021/03/03/messi-07382623.jpg">
+          </img>
+          <p>coversation</p>
+      </div>
+    </div>
+
+    <div class="send_message">
+      <textarea placeholder="Write something..."></textarea>
+      <div class="btn_function">
+        <button onclick="sendMesage()"type="button" href="#gotoBottom" class="btn btn-primary">
+          <i class="fa-solid fa-envelopes-bulk"></i>
+        </button>
+        <button id="scrollTopButton" type="button" class="btn btn-success">
+          <i class="fa-solid fa-upload"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="show_message">
+      <h3 style="font-family: 'Dancing Script';text-align: center;">
+        Please chose a conversation
+      </h3>
+    </div>
+   
+  </div>
+  
+  <div class="VideoCallPage">
+    <h3>Call Video</h3>
+    <div class="videoContainer">
+      <video playsinline muted style="width:500px;height:500px" autoplay id="myvideo"></video>
+      <img class="img_before_video"style="width:500px; height:350px;margin-top:62px" src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg"></img>
+      <video playsinline muted style="width:500px;height:500px" autoplay id="uservideo"></video>
+    </div>
+  </div>
+
+  <!--Login page-->
+  <div id="login_page">
+    <h3 style="text-align:center">Login</h3>
+    <h3 style="margin-left:40% ;margin-top:100px">Login</h3>
+    <input id="username_login"style="width:30%;margin:2% 30%"class="form-control form-control-sm" type="text" placeholder="email" aria-label=".form-control-sm example">
+    <input id="password_login"style="width:30%;margin:2% 30%"class="form-control form-control-sm" type="text" placeholder="password" aria-label=".form-control-sm example">
+    <button id="login"style="margin:0.5% 40%;width:100px" type="button" class="btn btn-primary">Login</button>
+    <button id="btn_gotoRegister"style="margin:0.5% 40%;width:100px" type="button" class="btn btn-primary">Register</button>
+    <!-- save data
+    <button id="save_data"style="margin:0.5% 40%;width:100px" type="button" class="btn btn-primary">save</button>
+    <button id="take_data"style="margin:0.5% 40%;width:100px" type="button" class="btn btn-primary">take</button>
     -->
+  </div>
+
+  
+  <!--Register page-->
+  <div id="register_page">
+    <h3 style="text-align:center">Register</h3>
+    <h3 style="margin-left:40% ;margin-top:100px">Register</h3>
+    <input id="username_regis" style="width:30%;margin:2% 30%"class="form-control form-control-sm" type="text" placeholder="username" aria-label=".form-control-sm example">
+    <input id="password_res" style="width:30%;margin:2% 30%"class="form-control form-control-sm" type="text" placeholder="password" aria-label=".form-control-sm example">
+    <input id="con_password_res" style="width:30%;margin:2% 30%"class="form-control form-control-sm" type="text" placeholder="confirm password" aria-label=".form-control-sm example">
+    <input id="email_res" style="width:30%;margin:2% 30%"class="form-control form-control-sm" type="text" placeholder="email" aria-label=".form-control-sm example">
+    <button id="btn_register"style="margin:0.5% 40%;width:100px" type="button" class="btn btn-primary">Register</button>
+    <button id="btn_goToLogin"style="margin:0.5% 40%;width:100px" type="button" class="btn btn-primary">Login</button>
+  </div>
+
+  <!--test-->
+  <div class="call_group">
+    <div class="content_call_group">
+      <h3 style="padding:70px">Video call group </h1>
+      <input class="id_call_group_user" placeholder="type id socket"/>
+      <button class="btn btn-primary" type="button" onclick="callTestGroup()">Call</button>
+      <div id="video-grid"></div>
+    </div>
+  </div>
+  
+  <!--official call group -->
+  <!--Trang call group-->
+  <div id="call_group_official"class="call_group">
+    <div class="content_call_group">
+      <h3 style="padding:70px">Video call group </h1>
+      <div id="video-grid-official"></div>
+    </div>
+  </div>
+  <!--form chứa danh sách user to call-->
+  <div class="popup_choose_mem_group">
+     <i id="close-icon-call-group" onclick="close_popup_choose_mem_call_group()" class="fa-solid fa-xmark"></i>
+  </div>
+  <!--Thông báo khi có cuộc gọi group tới-->
+  <div id ="notification_received_call_group"class="notification_received_call_group" >
+    <h5>You have a call group</h5>
+    <button class="btn btn-primary" type="button" id="acceptedCallNotification" onclick="AcceptCallGroup()">Accepted</button>
+    <div class="info_group_name_recieved_official" style="display:none"></div>
+  </div>
+  
+  <!--Live Stream -->
+  <div id="call_group_livestream"class="call_group">
+    <div class="content_call_group">
+      <h3 style="padding:70px">Live stream</h1>
+      <div id="video-grid-livestream"></div>
+    </div>
+  </div>
+  <div id="notification_livestream" class="notification_received_call_group">
+     <h5>Having a stream</h5>
+     <button class="btn btn-primary" type="button" id="acceptedCallNotification" onclick="SeeLiveStream()">SeeLiveStream</button>
+  </div>
+
+  <!--PEER SERVER -->
+  <div class="popup_choose_mem_group">
+    <i id="close-icon-call-group" onclick="close_popup_choose_mem_call_group()" class="fa-solid fa-xmark"></i>
+ </div>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+ <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+ <script>
+     // connnect to socket access  
+     // khi code local hay trên server chỉ cần sửa như này là xong 
+     const socket={};
+     const url="https://messenger-api-express.herokuapp.com/api/";
+     //const url="http://localhost:5000/api/";
+     //socket.current = io("https://socket-server-mes.herokuapp.com/");
+     socket.current = io("https://socket-server-nowrtc.herokuapp.com/");
+     let user;
+     let listConversation;
+     let currentConvId;
+     let userOnline=[];
+     //left bar
+     // this function just do if user.id change 
+     const renderConvesationByApi = async(userCurrentId)=>{
+       $('.left-bar').html(` <h3 style="text-align:center;margin:25px">Conversation</h3>`);
+       const res = await axios.get(url+"conversations/" + userCurrentId);
+       let conversations=res.data;
+       listConversation=conversations; // cập nhật cho biến global 
+       // sort conv by status 
+       const conversationTrue= conversations.filter(m=>m.status===true);
+       const conversationFailse=conversations.filter(m=>m.status===false);
+       for(let t=0;t<conversationFailse.length;t++){
+         conversationTrue.push(conversationFailse[t])
+       }
+       conversations=conversationTrue;
+       for(let i=0;i<conversations.length;i++){
+         let name_conv="";
+         let mem_conv= conversations[i].members.filter(m=>m!==userCurrentId);
+         for(let j=0;j<mem_conv.length;j++){
+           const res2= await axios.get(url+'users/getuser/'+mem_conv[j]);
+           name_conv=name_conv +" "+ String(res2.data[0].username);
+         }
+         if(conversations[i].status===true){
+           $('.left-bar').append(`
+           <div onclick="renderMessageByConvId(this)" class="conversation_mem">
+               <img src="https://image.vtc.vn/resize/th/upload/2021/03/03/messi-07382623.jpg">
+               </img>
+               <p style="color:red;font-weight: 900;font-size:15px">${name_conv}</p>
+               <p style="display:none"id="idConv">${conversations[i]._id}</p>
+               <p style="position:absolute;font-size:10px;right:30px">${conversations[i].updatedAt}</p>
+           </div>
+         `)
+         }
+         else{
+           $('.left-bar').append(`
+           <div onclick="renderMessageByConvId(this)" class="conversation_mem">
+               <img src="https://image.vtc.vn/resize/th/upload/2021/03/03/messi-07382623.jpg">
+               </img>
+               <p>${name_conv}</p>
+               <p style="display:none"id="idConv">${conversations[i]._id}</p>
+               <p style="position:absolute;font-size:10px;right:30px">${conversations[i].updatedAt}</p>
+           </div>
+         `)
+         }
+       }
+     }
+     
+     // automatic authenticate by localStorage
+     //take data 
+     // tạm thời ngưng chức năng tự động đăng nhập để phát triển RTC
+     let email = localStorage.getItem('email1');
+     let password = localStorage.getItem('password1');
+     //null
+     const authen= async(email,password)=>{
+       const loginInfo={email:email,password:password};
+       const res = await axios.post(url+"auth/login",loginInfo);
+       if(res.data.email!=undefined)
+         {
+           $('#login_page').hide();
+           $('#page_main').show();
+           // fix UI 
+           $('#account_user').text(res.data.username)
+           // paste data
+           user=res.data;
+           socket.current.emit("addUser", user._id);
+           // render conv 
+           renderConvesationByApi(user._id);
+         }
+     }
+     if((email!==null)&&(password!==null)){
+       authen(email,password);
+     }
+
+     //message 
+     // set current ConvId
+     // set by click DOM; khi user click vào xem conversation
+     const renderMessageByConvId= async(DomElement)=>{ 
+        const conv_id=$(DomElement).find('#idConv').text()
+        // update data 
+        currentConvId=conv_id;
+        //update status
+        const res_status = await axios.post(url+"conversations/update", {id:currentConvId,status:false});
+        // rerender Listconversation 
+        renderConvesationByApi(user._id);
+
+        const res= await  axios.get(url+"messages/" + conv_id);
+        const messages=res.data;
+        $('.show_message').html(`<div></div>`);
+        for(let i=messages.length-1;i>=0;i--){
+         if(messages[i].sender==user._id){
+           const userSenderInfo = await axios.get(url+"users/getuser/"+messages[i].sender)
+           $('.show_message').append(`
+             <div style="margin-top:60px"class="message_right">
+                 <img style="position:absolute;margin-top:-35px;height:30px;width:30px;border-radius:50%" src="https://vcdn-thethao.vnecdn.net/2020/09/06/top-messi-5407-1599376186.jpg">
+                 <p style="margin-left:30px;color:black;position:absolute;margin-top:-35px">${userSenderInfo.data[0].username}</p>
+                 <p>${messages[i].text}</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">${messages[i].createdAt}</p>
+             </div>
+           `)
+         }
+         else{
+           const userSenderInfo = await axios.get(url+"users/getuser/"+messages[i].sender)
+           $('.show_message').append(`
+             <div style="margin-top:60px"class="message_left">
+                 <img style="position:absolute;margin-top:-35px;height:30px;width:30px;border-radius:50%" src="https://vcdn-thethao.vnecdn.net/2020/09/06/top-messi-5407-1599376186.jpg">
+                 <p style="margin-left:30px;position:absolute;margin-top:-35px">${userSenderInfo.data[0].username}</p>
+                 <p>${messages[i].text}</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">${messages[i].createdAt}</p>
+             </div>
+           `)
+         }
+        }
+        //đẩy tin chuối lên
+        $('.show_message').append(`
+             <div style="margin-top:60px"class="message_right">
+                 <p style="position:absolute;margin-top:-30px">hhhsvhds</p>
+                 <p>hsgsdysd</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">hgagsgdsg</p>
+             </div>
+        `);
+        $('.show_message').append(`
+             <div id="gotoBottom"style="margin-top:60px"class="message_right">
+                 <p style="position:absolute;margin-top:-30px">hhhsvhds</p>
+                 <p>hsgsdysd</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">hgagsgdsg</p>
+             </div>
+        `);
+
+     }
+     const renderMessageByConvId_real= async(conv_id)=>{ 
+       //let receiverId= ($(DomElement).find('#idConv').text());
+        //alert(($(DomElement).find('#idConv').text()))
+        //const conv_id=$(DomElement).find('#idConv').text()
+        // update data 
+        //currentConvId=conv_id;
+        
+        const res= await  axios.get(url+"messages/" + conv_id);
+        const messages=res.data;
+        $('.show_message').html(`<div></div>`);
+        for(let i=messages.length-1;i>=0;i--){
+         if(messages[i].sender==user._id){
+           const userSenderInfo = await axios.get(url+"users/getuser/"+messages[i].sender)
+           $('.show_message').append(`
+             <div style="margin-top:60px"class="message_right">
+                 <p style="position:absolute;margin-top:-30px">${userSenderInfo.data[0].username}</p>
+                 <p>${messages[i].text}</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">${messages[i].createdAt}</p>
+             </div>
+           `)
+         }
+         else{
+           const userSenderInfo = await axios.get(url+"users/getuser/"+messages[i].sender)
+           $('.show_message').append(`
+             <div style="margin-top:60px"class="message_left">
+                 <p style="position:absolute;margin-top:-30px">${userSenderInfo.data[0].username}</p>
+                 <p>${messages[i].text}</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">${messages[i].createdAt}</p>
+             </div>
+           `)
+         }
+        }
+        //đẩy tin chuối lên
+        $('.show_message').append(`
+             <div style="margin-top:60px"class="message_right">
+                 <p style="position:absolute;margin-top:-30px">hhhsvhds</p>
+                 <p>hsgsdysd</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">hgagsgdsg</p>
+             </div>
+        `);
+        $('.show_message').append(`
+             <div id="gotoBottom"style="margin-top:60px"class="message_right">
+                 <p style="position:absolute;margin-top:-30px">hhhsvhds</p>
+                 <p>hsgsdysd</p>
+                 <p style="font-size:10px;position:absolute;margin-top:-20px">hgagsgdsg</p>
+             </div>
+        `);
+     }
+     
+     // send message 
+     const sendMesage= async ()=>{
+        if(currentConvId!==undefined){
+           const res =await axios.get(url+"conversations/getconv/"+currentConvId);
+           const receivers= res.data.members.filter(m=>m!==user._id);
+           const newMessage= $('textarea').val()
+           const message = {
+             sender: user._id,
+             text: newMessage,  
+             conversationId: currentConvId,
+           };
+           try {
+             const res_conv = await axios.post(url+"conversations/update", {id:currentConvId,status:true});  // call api gửi tin nhắn vào db 
+             const res = await axios.post(url+"messages", message); 
+             console.log(res.data)
+             socket.current.emit("sendMessage", {
+                 senderId: user._id,
+                 receiverId: receivers,// 1 mảng 
+                 text: newMessage,
+                 idConversation:currentConvId,
+                 idmes:res.data._id
+             });
+             renderMessageByConvId_real(currentConvId)
+           }
+           catch(err){
+             console.log(err)
+           }
+        }
+        else{
+         alert("Please chose an conversation")
+        }
+     }
+
+      //loggin register hide show
+     $('#btn_goToLogin').click(function() {
+         $('#register_page').hide();
+         $('#login_page').show();
+     })
+     $('#btn_gotoRegister').click(function(){
+       $('#register_page').show();
+       $('#login_page').hide();
+     })
+     // call api login 
+     $('#login').click(function(){
+        const username_login= $('#username_login').val(); // lấy giá trị trong input 
+        const password_login=$('#password_login').val();
+        // save data login to local storage 
+        localStorage.setItem('email', `${username_login}`);
+        localStorage.setItem('password', `${password_login}`);
+
+        const loginInfo={email:username_login,password:password_login};
+        const authenticate= async()=>{
+         const res = await axios.post(url+"auth/login",loginInfo);
+         if(res.data.email!=undefined)
+         {
+           $('#login_page').hide();
+           $('#page_main').show();
+           // fix UI 
+           $('#account_user').text(res.data.username)
+           // paste data
+           user=res.data;
+           socket.current.emit("addUser", user._id);
+           // render conv 
+           renderConvesationByApi(user._id);
+         }
+         else{
+           alert("Thông tin đăng nhập không hợp lệ ")
+         }
+        }
+        authenticate();
+     })
+     // call api register
+     $('#btn_register').click(async ()=> {
+       const password=$('#password_res').val();
+       const confirmpassword=$('#con_password_res').val();
+       const email= $('#email_res').val();
+       const username= $('#username_regis').val();
+
+       if(password===confirmpassword){
+         const user = {
+           username: username,
+           email: email,
+           password: password,
+         };
+         try{
+           const res = await axios.post(url+"auth/register", user);
+           $('#register_page').hide();
+           $('#login_page').show();
+           if(res.data.username==username){
+             alert("Đăng ký thành công")
+           }
+         }
+         catch(err){
+           alert(err);
+         }
+       }
+       else{
+         alert("Failed confirm password")
+       }
+     })
+
+
+     // right-bar
+     const renderUserOnlineByUserId = async (users)=>{
+         // refresh right bar 
+         $('.right-bar').html(`<h3 style="text-align:center;margin:25px">User Online</h3>`)
+         for(let i=0;i<users.length;i++){
+           const res= await axios.get(url+'users/getuser/'+users[i].userId);
+           $('.right-bar').append(`
+               <div class="right-bar-inner">
+                 <div class="call-options">
+                   <button type="button" onclick="callvideo(this)"class="btn btn-success">
+                       <p style="display:none" id="contentCallVideo">${users[i].socketId}</p>
+                       <p style="display:none" id="nameCallVideo">${res.data[0].username}</p>
+                       <i class="fa-solid fa-video"></i>
+                   </button>
+                   <button type="button" class="btn btn-success">
+                       <i class="fa-solid fa-phone"></i>
+                   </button>
+                 </div>
+                 <div onclick="CreateConv(this)" class="user_online">
+                   <a id="id_user_online"style="display:none">${res.data[0]._id}<a/>
+                   <img src="https://media.bongda.com.vn/files/anh.nguyen/2022/07/07/messi-0937.png">
+                     <div class="active"></div>
+                   </img>
+                   <p>${res.data[0].username}</p>
+                 </div>
+               </div>
+           `)
+         }
+     }
+   
+     const CreateConv = async(DomElement)=>{
+       let receiverId= ($(DomElement).find('#id_user_online').text());
+       const new_arr = listConversation.filter(m=>m.members.length<3);
+       const new_arr2= new_arr.filter(m=>m.members.includes(receiverId))
+       if(new_arr2.length>0){
+         alert("You had conversation with this person! Try again")
+       }
+       else{
+         const res = await axios.post(url+"conversations", {senderId:user._id,receiverId:receiverId});  // call api gửi tin nhắn vào db 
+         socket.current.emit("CreateConversation", {
+         _id:res.data._id,
+         senderId: user._id,  // gửi lên dữ liệu sender 
+         receiver:receiverId
+       });
+        renderConvesationByApi(user._id);
+       }
+     }
+       // hàm sẽ được khởi động khi có thông tin emit 
+     socket.current.on("getUsers", (users) => {
+       if(user._id!==undefined){
+         userOnline= users.filter(m=>m.userId!==user._id);
+       }
+       renderUserOnlineByUserId(userOnline);
+     })
+
+      // listen event sendMes
+     socket.current.on("getMessage", async (data) => {
+      const UserInfo = await axios.get(url+"users/getuser/"+data.senderId);
+      new Notification("Tin nhắn mới", { body: `${UserInfo.data[0].username} : ${data.text}` });
+      if(data.idConversation==currentConvId){
+         renderMessageByConvId_real(currentConvId);
+         renderConvesationByApi(user._id)
+      }
+      else{
+       renderConvesationByApi(user._id)
+      }
+      })
+     socket.current.on("getConversation", (data) => {
+      if(data.members.includes(user._id)){
+       renderConvesationByApi(user._id);
+      }
+      })
+ 
+     
+      // webRTC 
+     let localStream ;
+     let signalArrival;
+     let idCaller;
+     let UserToCallId;
+     let currentpeer;// peer của ông máy 
+     // có cần socket id của người gửi đển người nhận phản hồi thông tin 
+     socket.current.on('callUser', (data) => {  // lắng nghe thông tin truyền đến từ user thông qua kênh call 
+       signalArrival=data.signal;
+       idCaller=data.from;
+       $("#page_main").hide();
+       $(".VideoCallPage").show();
+       $(".VideoCallPage").append(`
+           <div class="notification_calling_for_receiver">
+             <h4 id="notification_before_video_call">${data.name} is calling</h4>
+             <button style="margin:2% 45%" onclick="Answer()" class="btn btn-success">
+               Answer
+             </button>
+           </div>
+         `)
+     });
+     const Answer = async ()=>{
+       // take stream
+       const mediaStream =  await navigator.mediaDevices.getUserMedia({video: true,audio:true});
+       localStream=mediaStream;
+       document.getElementById('myvideo').srcObject=mediaStream;
+
+       const peer =new SimplePeer({initiator: false, trickle: false, stream:localStream});
+       peer.signal(signalArrival);
+       peer.on('signal',(data)=>{
+         console.log(data)
+         // chuyển ngược lại dữ liệu để user bên kia tạo kết nối 
+         socket.current.emit('answerCall', { signal: data, to: idCaller });
+       });
+       peer.on('stream', (currentStream) => {  // kết nối xong đẩy stream vào; nhận stream về 
+           $(".img_before_video").hide();
+           document.getElementById('uservideo').srcObject= currentStream;
+       });
+       $(".notification_calling_for_receiver").hide();
+       $(".VideoCallPage").append(`
+           <button style="margin:2% 45%" onclick="endCall()" class="btn btn-danger">
+             END CALL
+           </button>
+           <button id="mute_receiver" type="button" class="btn btn-info">
+             <i class="fa-solid fa-microscope"></i>
+           </button>
+           <button type="button" class="btn btn-primary">
+             <i class="fa-solid fa-camera-retro"></i>
+           </button>
+       `);
+       // tắt âm của partner khi partner tắt âm 
+       socket.current.on('unmuteCaller',(data)=>{
+         $('#uservideo').prop('muted', false)
+       })
+       socket.current.on('endCall',(data)=>{  // lắng nghe sự kiện kết thúc cuộc gọi lúc nó đang diễn ra từ user call 
+           console.log(data);
+           window.location.reload();
+         })
+       socket.current.on('turn_off_cam_caller',(data)=>{
+         //localStream.getVideoTracks()[0].stop(); // câu lệnh tạm dừng lấy video của peer 
+         // có  câu lệnh bật cam tiếp tục 
+         $('.videoContainer').append(`
+         <img style="position:absolute;width:600px;z-index:10;left:650px; height:390px;margin-top:60px" src="https://thumbs.dreamstime.com/b/default-avatar-profile-vector-user-profile-default-avatar-profile-vector-user-profile-profile-179376714.jpg"></img>
+     
+         `)
+       })
+     }
+     const endCall=()=>{  // kết thúc cuộc gọi lúc nó đang diễn ra phía receiver 
+       socket.current.emit('endCall',{idpartner:idCaller});
+       window.location.reload();
+     }
+
+    
+
+      //Khai báo sau vẫn được 
+      //trước mắt vẫn cùng 1 tab 
+      // Phía caller
+     const endCallBeforeVideoCall=() =>{
+       window.location.reload();
+     }
+     const endCall_Caller=()=>{ // kết thúc cuộc gọi lúc nó đang diễn ra ở phía caller
+           let idpartner=$("#usertocall_caller").text();
+           socket.current.emit('endCall',{idpartner});
+           window.location.reload()
+         }
+     const un_mute_caller= ()=>{
+           socket.current.emit('unmuteCaller',{idpartner:UserToCallId,userId:user._id})
+     }
+     const turnOffCameraCaller= () =>{
+       // localStream.getVideoTracks()[0].stop()
+       // mediaStream.getAudioTracks()[0].enabled = true;
+       console.log(localStream.getVideoTracks()[0]);
+       localStream.getVideoTracks().forEach(track => track.enabled =false); // câu lệnh dừng video 
+       socket.current.emit('turn_off_cam_caller',{idpartner:UserToCallId,userId:user._id});
+
+       // localStream.getVideoTracks().forEach(track => track.enabled =true);  // câu lệnh phát video 
+     }
+     const callvideo= async (DOMvideocall)=>{
+         //dùng display:none dấu đi vẫn được 
+         // solve ui
+         UserToCallId=$(DOMvideocall).find('#contentCallVideo').text();
+         $("#page_main").hide();
+         $('.VideoCallPage').show();
+         $(".VideoCallPage").append(`
+           <h4 id="notification_before_video_call">Waiting for moment</h4>
+           <button id="endcall_before_videocall" style="margin:2% 45%" onclick="endCallBeforeVideoCall()" class="btn btn-danger">
+             END CALL
+           </button>
+         `)
+         // take stream
+         const mediaStream =  await navigator.mediaDevices.getUserMedia({video: true,audio:true});
+         localStream=mediaStream;
+         document.getElementById('myvideo').srcObject=mediaStream;
+         
+         // create peer 
+         const peer =new SimplePeer({initiator: true, trickle: false, stream:localStream});
+         peer.on('signal',(data)=>{
+           socket.current.emit('callUser', {userToCall: UserToCallId, signalData: data, from: user._id, name:user.username });
+         })
+         socket.current.on('callAccepted', (signal) => {
+           peer.signal(signal);  // kết nối với người nhận 
+           $('#notification_before_video_call').hide();
+           $('#endcall_before_videocall').hide();
+           $(".VideoCallPage").append(`
+           <button id="endcall_before_videocall" style="margin:2% 45%" onclick="endCall_Caller()" class="btn btn-danger">
+             <div style="display:none" id="usertocall_caller">${UserToCallId}</div>
+             END CALL
+           </button>
+           <button id="un_mute_caller_id" onclick="un_mute_caller()" type="button" class="btn btn-info">
+             <i class="fa-solid fa-microscope"></i>
+           </button>
+           <button type="button" id="turn_off_cam_caller" onclick="turnOffCameraCaller()" class="btn btn-primary">
+             <i class="fa-solid fa-camera-retro"></i>
+           </button>
+         `)
+         });
+        
+         peer.on('stream', (currentStream) => {  // kết nối xong đẩy stream vào; nhận stream về 
+           $(".img_before_video").hide();
+           document.getElementById('uservideo').srcObject= currentStream;
+         });
+
+         currentpeer=peer;  // cập nhật giá trị cho biến toàn cục 
+         // destroy peer thì bắn lên socket 
+
+         socket.current.on('endCall',(data)=>{ // lắng nghe sự kiện kết thúc cuộc gọi lúc nó đang diễn ra 
+           console.log(data);
+           window.location.reload();
+         })
+         // hiển thị trạng thái 
+         // làm vế caller trước 
+         socket.current.on('unmuteCaller',async (data)=>{
+           $("#un_mute_caller_id").hide();
+           $(".VideoCallPage").append(`
+             <button type="button" class="btn btn-info">
+               <i class="fa-solid fa-microphone-slash"></i>
+             </button>
+           `);
+         })
+         socket.current.on('turn_off_cam_caller',(data)=>{
+           $("#turn_off_cam_caller").hide();
+           $(".VideoCallPage").append(`
+             <button type="button" class="btn btn-info">
+               <i class="fa-solid fa-camera-slash"></i>
+             </button>
+           `);
+         })
+      }
+
+     
+
+     // call group 
+     let videoGrid = document.getElementById("video-grid");
+     let videoGridOficial = document.getElementById("video-grid-official");
+
+     //----------------------------------------------------------------
+     // test
+     // before start call group 
+     socket.current.on("signal_call_group",(data)=>{
+       $("#page_main").hide();
+       $(".call_group").show();
+       $(".call_group").append(`
+           <div class="notification_calling_for_receiver">
+             <h4 id="notification_before_video_call">You have a call group</h4>
+             <button style="margin:2% 45%" onclick="AnswerCallGroup()" class="btn btn-success">
+               Answer
+             </button>
+           </div>
+         `)
+     })
+     const callgroup =()=>{
+        $('#page_main').hide();
+        $('.call_group').show();
+     }
+     const callTestGroup= async()=>{
+       const mediaStream =  await navigator.mediaDevices.getUserMedia({video: true,audio:true});
+       localStream=mediaStream;
+       const video = document.createElement("video");
+       addVideoStream(video, localStream);
+       
+         // create peer 
+       const peer =new SimplePeer({initiator: true, trickle: false, stream:localStream});
+      
+       // kết nối với kênh signal và gửi signal lên server 
+       peer.on('signal',(data)=>{
+           socket.current.emit('callUserTestGroup', {userToCall: userOnline[0].socketId, signalData: data, from: user._id, name:user.username });
+       });
+       peer.on('stream', (currentStream) => {  // kết nối xong đẩy stream vào; nhận stream về 
+         console.log('connected')
+       });
+       // kết nối 2 chiều 
+       socket.current.on('TestGroupCallerTakeStreamServer',(data)=>{
+         peer.signal(data);
+       });
+       // nhận offer từ server để lấy luồng stream ra mà không cần bên kia kết nối signal của mình 
+       socket.current.on('transformOfferAnswerToCaller',async (data)=>{
+         const peer2 =new SimplePeer({initiator:false, trickle: false, stream:localStream});
+         peer2.signal(data);
+         peer2.on('signal',(data2)=>{
+           //console.log(data2)
+           //socket.current.emit('RestransformOfferAnswerToCaller', {userToCall: userOnline[0].socketId, signalData: data, from: user._id, name:user.username });
+         });
+         peer2.on('stream',(currentStream)=>{
+           const video2 =document.createElement("video");
+           addVideoStream(video2, currentStream);
+         })
+       });
+     }
+     const AnswerCallGroup = async() =>{
+       const mediaStream =  await navigator.mediaDevices.getUserMedia({video: true,audio:true});
+       localStream=mediaStream;
+       const video = document.createElement("video");
+       addVideoStream(video, localStream);
+         // create peer 
+       const peer =new SimplePeer({initiator: true, trickle: false, stream:localStream});
+       peer.on('signal',(data)=>{
+           socket.current.emit('callUserTestGroupAnswer', {userCalled: userOnline[0].socketId, signalData: data});
+       });
+       peer.on('stream', (currentStream) => {  // kết nối xong đẩy stream vào; nhận stream về 
+         console.log("Nhận đc stream từ server");
+         console.log(currentStream);
+         const video2 =document.createElement("video");
+         addVideoStream(video2, currentStream);
+       });
+       socket.current.on('TestGroupAnswerTakeStreamServer',(data)=>{
+         peer.signal(data);
+       })
+     }
+     const addVideoStream = (videoEl, stream) => {
+       videoEl.srcObject = stream;
+       videoEl.addEventListener("loadedmetadata", () => {
+         videoEl.play();
+       });
+       videoGrid.append(videoEl);
+     };
+
+
+
+     //--------------------------------------------------------------------------------
+     // call group official 
+     let listUserToCallGroup=[];
+     let numMember;  // số lượng thành viên trong nhóm 
+     // lắng nghe người call group 
+     socket.current.on('ReceivedCallGroup', async (data)=>{  // data là phòng call ;id socket của user call 
+       let userCallId;  // id trong base
+       for(let i=0; i<userOnline.length; i++){
+        if(userOnline[i].socketId == data.userCall){
+         userCallId=userOnline[i].userId;
+        }
+       }
+       $('#notification_received_call_group').show();
+       // take name of caller 
+       const res= await axios.get(url+'users/getuser/'+userCallId);
+       
+       $('#notification_received_call_group').append(`
+          <h5>${res.data[0].username} is calling you in a group</h5>
+       `)
+       $('.info_group_name_recieved_official').text(data.roomName)
+
+     })
+     // bật form để chọn danh sách call
+     const callgroupOfficial = async () =>{
+       $('.popup_choose_mem_group').show();
+       $('.popup_choose_mem_group').html(`
+          <i id="close-icon-call-group" onclick="close_popup_choose_mem_call_group()" class="fa-solid fa-xmark"></i>
+          <h5 style="text-align:center;margin:25px">List User</h3>
+           <button style="margin:0px 150px" type="button" class="btn btn-primary">
+             <li onclick ="SendListMemberCallGroup()" class="nav-item">
+               Call
+             </li>
+           </button>
+         `)
+         for(let i=0;i<userOnline.length;i++){
+           const res= await axios.get(url+'users/getuser/'+userOnline[i].userId);
+           $('.popup_choose_mem_group').append(`
+               <div class="right-bar-inner">
+                 <div  class="user_online">
+                   <a id="id_user_online"style="display:none">${res.data[0]._id}<a/>
+                   <img style="position:absolute ;display:inline-block" src="https://media.bongda.com.vn/files/anh.nguyen/2022/07/07/messi-0937.png">
+                     <div class="active"></div>
+                   </img>
+                   <p style="position:absolute ;display:inline-block; left:70px">${res.data[0].username}</p>
+                   <input style="margin:15px; font-size:30px;position:absolute; display:inline-block; right:15px" type="checkbox" onchange="chooseUserToCall(this)"value=${userOnline[i].socketId}/>
+                 </div>
+               </div>
+           `)
+         }
+     }
+     // đóng form chọn 
+     const close_popup_choose_mem_call_group= () =>{
+       $('.popup_choose_mem_group').hide();
+     }
+     // lấy data từ input => dùng value 
+     const chooseUserToCall =(data) =>{
+       let userAdd =$(data).val().split("/")[0];
+       if(listUserToCallGroup.includes(userAdd)){
+         listUserToCallGroup=listUserToCallGroup.filter(m=>m!=userAdd)
+       }
+       else{
+         listUserToCallGroup.push(userAdd)
+       }
+     }
+     // gửi danh sách user muốn call lên hệ thống và bắt đầu call 
+     const SendListMemberCallGroup =async () =>{
+       $('#page_main').hide();
+       $('#call_group_official').show();
+       const mediaStream =  await navigator.mediaDevices.getUserMedia({video: true,audio:true});
+       localStream=mediaStream;
+       const video = document.createElement("video");
+       addVideoStreamOfficial(video, localStream);
+       // gửi stream của init user lên server ; gửi lên không cần phải lấy stream về 
+       const peer =new SimplePeer({initiator: true, trickle: false, stream:localStream});
+       peer.on('signal',(data)=>{
+           socket.current.emit('sendSignalUserEmit', { signalData: data }); // luồng chỗ này cần lưu ý trong trường hợp mạng ông tổ chức ra cuộc họp có vấn đề 
+       });
+       //socket.current.emit('SendListMemberCallGroupOfficial', listUserToCallGroup);
+       socket.current.on('takeSignalBackFromServerTrackInit',(data)=>{  // dữ liệu trả về ok 
+         peer.signal(data);
+         console.log('Hoàn thành đẩy stream vào hệ thống')
+         console.log(data)
+         // sau khi khởi tạo xong mới gửi danh sách user 
+         console.log(listUserToCallGroup)
+         socket.current.emit('SendListMemberCallGroupOfficial',listUserToCallGroup);
+       }
+       );
+     }
+
+     
+     const AcceptCallGroup = async() =>{
+       
+       $('.notification_received_call_group').hide();  // tắt form thông báo 
+       $('#page_main').hide();
+       $('#call_group_official').show();
+       const mediaStream =  await navigator.mediaDevices.getUserMedia({video: true,audio:true});
+       localStream=mediaStream;
+       const video = document.createElement("video");
+       addVideoStreamOfficial(video, localStream);
+       // gửi stream của init user lên server ; gửi lên không cần phải lấy stream về 
+       const peer =new SimplePeer({initiator: true, trickle: false, stream:localStream});
+       // gửi stream lên ít nhất phải lấy signal về 
+       peer.on('signal',(data)=>{
+          socket.current.emit('CallAcceptedGroupOfficial', { signalData: data, roomName:$('.info_group_name_recieved_official').text() });
+       });
+       // nhận answer trả về để hoàn thành việc đẩy stream vào hệ thống 
+       socket.current.on('SignalAnswerNewUserWhenChildUserPushFirstStream',(data)=>{
+         peer.signal(data.signalAnswer);
+         console.log('Hoàn thành đẩy stream vào hệ thống')
+         console.log(data)
+         socket.current.emit('notification_new_user_join',{roomName:data.roomName});
+       })
+     };
+     // lắng nghe sự kiện user mới đăng nhập 
+     let nameStreamArrival;  // biến giúp chỉ chỉ kết nối với 1 stream 1 lần duy nhất 
+     socket.current.on('new_user_connected_official',async (data)=>{
+        
+         console.log(`${data.socketId} joined room!`);
+         // tạo offer ảo với video ảo để lấy stream của user mới này về 
+         const mediaStream2 =  await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+         const peer2 =new SimplePeer({initiator: true, trickle: false,stream:mediaStream2});
+         peer2.on('signal',(data2)=>{
+           socket.current.emit('takeStreamUserByRoomNameAndSocketId', { signalData: data2,roomName:data.roomName,nameStream:data.socketId});
+         });
+         socket.current.on('signalAnswerForUserTakeLiveStream',(data3)=>{ // ta cần phải biết ta lấy stream của thằng nàp
+             console.log(nameStreamArrival);
+             peer2.signal(data3.signalAnswer);
+             console.log(data3);
+             console.log(`Đã kết nối với stream ${data3.nameStream}`)
+         })
+         peer2.on('stream',(currentStream)=>{
+           const video = document.createElement("video");
+           video.setAttribute("id", `${currentStream.id}`);
+           addVideoStreamOfficial(video,currentStream);
+         })
+       
+     })
+     socket.current.on('test',(data)=>{
+       console.log(data);
+     })
+     // function 
+     const addVideoStreamOfficial = (videoEl, stream) => { // làm việc với id cần cẩn thận 1 đối tượng mang 1 id duy nhất 
+       videoEl.setAttribute(
+         'style',
+         ' width: 150px; height: 150px;',
+       );
+       videoEl.srcObject = stream;
+       videoEl.addEventListener("loadedmetadata", () => {
+         videoEl.play();
+       });
+       videoGridOficial.append(videoEl);
+     };
+     
+
+     //-------------------------------------------------------------------------------------------------------------------------------------
+     // live stream 
+
+     // đoạn offer lên muốn nhận về 1 stream phải đưa lên 1 stream đầy đủ => Hai bên cần lắng nghe video của nhau để hiển thị dữ liệu 
+     
+     let videoGridStream = document.getElementById("video-grid-livestream");
+     // pha gốc : 2 chiều 
+     const LiveStream = async ()=>{
+       $('#page_main').hide();
+       $('#call_group_livestream').show();
+       const mediaStream =  await navigator.mediaDevices.getUserMedia({video: true,audio:true});
+       localStream=mediaStream;
+       console.log(localStream);
+       const video = document.createElement("video");
+       addVideoStreamLive(video, localStream);
+       // gửi stream của init user lên server ; gửi lên không cần phải lấy stream về 
+       const peer =new SimplePeer({initiator: true, trickle: false, stream:localStream});
+       peer.on('signal',(data)=>{
+           socket.current.emit('livestream', { signalData: data }); // luồng chỗ này cần lưu ý trong trường hợp mạng ông tổ chức ra cuộc họp có vấn đề 
+       });
+       socket.current.on('answerSignalBeforeTakeLiveStream',(data)=>{
+         console.log(data);
+         peer.signal(data);
+       })
+     }
+     // thông báo cho user về cuộc gọi 
+     socket.current.on('haveLiveStream',async (data)=>{
+       let userCallId;  // id trong base
+       for(let i=0; i<userOnline.length; i++){
+        if(userOnline[i].socketId == data.useLiveStream){
+         userCallId=userOnline[i].userId;
+        }
+       };
+       const res= await axios.get(url+'users/getuser/'+userCallId);
+       $('#notification_livestream').show();
+       $('#notification_livestream').append(`
+         <h5>${res.data[0].username} is live stream</h5>
+       `);
+     })
+
+     // pha phụ 1 chiều 
+     // muốn nhận về 1 stream đầy đủ thì cần offer 1 stream đầy đủ 
+     const SeeLiveStream = async () =>{
+       $('#page_main').hide();
+       $('#call_group_livestream').show();
+       $('#notification_livestream').hide();
+       // tạo offer đẩy lên server
+       const mediaStream =  await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+       const peer =new SimplePeer({initiator: true, trickle: false,stream:mediaStream});
+       peer.on('signal',(data)=>{
+          socket.current.emit('SeeLiveStream', { signalData: data});
+       });
+       socket.current.on('signalAnswerForUserTakeLiveStream',(data)=>{
+         console.log(data);
+         peer.signal(data);
+       })
+       peer.on('stream',(currentStream)=>{  // lấy stream từ live stream 
+         console.log(currentStream);
+         addVideoStreamLive(document.createElement("video"),currentStream);
+       })
+     }
+     const addVideoStreamLive =(videoEl, stream)=>{
+       videoEl.setAttribute(
+         'style',
+         ' width: 150px; height: 150px;',
+       );
+       videoEl.srcObject = stream;
+       videoEl.addEventListener("loadedmetadata", () => {
+         videoEl.play();
+       });
+       videoGridStream.append(videoEl);
+     }
+     
+     
+     // -------------------------------------------------------------------------------------------------------------------------------
+     // PEER SERVER 
+
+     // vẫn sử dụng lại có chế chọn mảng và mảng chọn ở phần trên và cả hàm cập nhật giá trị trong mảng nữa 
+     // vừa gửi tín hiệu call vừa sử dụng thẻ a => Vẫn hoạt động ok 
+     const callgroupPeerServer =async ()=>{
+       $('.popup_choose_mem_group').show();
+       $('.popup_choose_mem_group').html(`
+          <i id="close-icon-call-group" onclick="close_popup_choose_mem_call_group()" class="fa-solid fa-xmark"></i>
+          <h5 style="text-align:center;margin:25px">List User</h3>
+           
+             <button style="margin:0px 150px" type="button" class="btn btn-primary">
+               <li onclick ="SendListMemberCallGroupPS()" class="nav-item">
+                 Call
+               </li>
+             </button>
+           
+         `)
+         for(let i=0;i<userOnline.length;i++){
+           const res= await axios.get(url+'users/getuser/'+userOnline[i].userId);
+           $('.popup_choose_mem_group').append(`
+               <div class="right-bar-inner">
+                 <div  class="user_online">
+                   <a id="id_user_online"style="display:none">${res.data[0]._id}<a/>
+                   <img style="position:absolute ;display:inline-block" src="https://media.bongda.com.vn/files/anh.nguyen/2022/07/07/messi-0937.png">
+                     <div class="active"></div>
+                   </img>
+                   <p style="position:absolute ;display:inline-block; left:70px">${res.data[0].username}</p>
+                   <input style="margin:15px; font-size:30px;position:absolute; display:inline-block; right:15px" type="checkbox" onchange="chooseUserToCall(this)"value=${userOnline[i].socketId}/>
+                 </div>
+               </div>
+           `)
+         }
+     }
+     const SendListMemberCallGroupPS = () =>{
+       socket.current.emit('SendListMemberCallGroupPS', {listUserToCallGroup,linkGroup:`https://group-chat-video-peerserver.herokuapp.com/${socket.current.id}timviec365PS`});
+       window.location.href = `https://group-chat-video-peerserver.herokuapp.com/${socket.current.id}timviec365PS/${$('#account_user').text()}`;
+     }
+     // lắng nghe nhận được cuộc gọi 
+     socket.current.on('ReceivedCallGroupPS',async (data)=>{
+       let userCallId;  // id trong base
+       for(let i=0; i<userOnline.length; i++){
+        if(userOnline[i].socketId == data.userCall){
+         userCallId=userOnline[i].userId;
+        }
+       }
+       $('.notification_received_call_group').show();
+       // take name of caller 
+       const res= await axios.get(url+'users/getuser/'+userCallId);
+       $('.notification_received_call_group').html(`
+         <h4 style="text-align:center">You have a call group</h4>
+
+         <a href="${data.linkroom}/${$('#account_user').text()}">
+           <button class="btn btn-primary"> Accept</button>
+         </a>
+         <h5>${res.data[0].username} is calling you in a group</h5>
+       `)
+     })
+  </script>
   </body>
 </html>
